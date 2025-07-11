@@ -2,7 +2,7 @@ pipeline {
     agent any
      tools {
         // Install the Maven version configured as "M3" and add it to the path.
-        node "NODEJS"
+        nodejs "NODEJS"
     }
     stages {
         stage("version of software"){
