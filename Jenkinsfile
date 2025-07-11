@@ -14,7 +14,7 @@ pipeline {
         }
         stage("install angular software"){
             steps{
-                sh "npm install -g angular/cli@16.0.1"
+                sh "npm install -g @angular/cli@16.0.1"
             }
         }
         stage("check angular version"){
