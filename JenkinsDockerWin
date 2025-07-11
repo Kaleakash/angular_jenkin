@@ -1,38 +1,27 @@
 pipeline {
     agent any
-     tools {
-        // Install the Maven version configured as "M3" and add it to the path.
-        nodejs "NODEJS"
-    }
     stages {
-        stage("version of software"){
+        stage("Docker Version"){
             steps{
-                sh "node --version"
-                sh "npm --version"
-                sh "npx --version"
+                bat "docker --version"
             }
         }
-        stage("install angular software"){
+        stage("Create the Docker image"){
             steps{
-                sh "npm install -g @angular/cli@16.0.1"
+                bat "docker build -t my-angular . -f Dockerfile"
             }
         }
         stage("check angular version"){
             steps{
-                sh "ng version"
+                bat "docker run -d -p 80:80 my-angular"
             }
         }
-        stage("install angular dependencies"){
+        stage("docker status"){
             steps{
-                sh "npm install"
+                bat "docker images"
+                bat "docker container ps"
             }
         }
-        stage("build the angular project"){
-            steps{
-                sh "ng build"
-            }
-        }
-        
     }
     post {
         always {
