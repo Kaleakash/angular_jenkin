@@ -1,0 +1,51 @@
+pipeline {
+    agent any
+     tools {
+        // Install the Maven version configured as "M3" and add it to the path.
+        node "NODEJS"
+    }
+    stages {
+        stage("version of software"){
+            steps{
+                sh "node --version"
+                sh "npm --version"
+                sh "npx --version"
+            }
+        }
+        stage("install angular software"){
+            steps{
+                sh "npm install -g angular/cli@16.0.1"
+            }
+        }
+        stage("check angular version"){
+            steps{
+                sh "ng version"
+            }
+        }
+        stage("install angular dependencies"){
+            steps{
+                sh "npm install"
+            }
+        }
+        stage("build the angular project"){
+            steps{
+                sh "ng build"
+            }
+        }
+    }
+    post {
+        always {
+            echo 'This will always run'
+        }
+        success {
+            echo 'This will run only if successful'
+        }
+        failure {
+            echo 'This will run only if failed'
+        }
+        changed {
+            echo 'This will run only if the state of the Pipeline has changed'
+            echo 'Example : if the Pipeline was previously failing but is now successful'
+        }
+    }
+}
